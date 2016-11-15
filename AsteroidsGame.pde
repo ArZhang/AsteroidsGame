@@ -1,19 +1,46 @@
 SpaceShip bob;
+ArrayList <Asteroid> asteroids;
+Bullet bill;
+
 public void setup() 
 {
-  size(500,500);
+  size(800,800);
   bob=new SpaceShip();
   bob.setX(250);
   bob.setY(250);
   bob.setPointDirection(0);
-  bob.setDirectionX(1);
-  bob.setDirectionY(1);
-}
+  bob.setDirectionX(0.5);
+  bob.setDirectionY(0.5);
+  bill=new Bullet();
+  bill.setX(bob.getX());
+  bill.setY(bob.getY());
+  bill.setDirectionX(bob.getDirectionX());
+  bill.setDirectionY(bob.getDirectionY());
+  //a=new Asteroid();
+
+  asteroids = new ArrayList ();
+  for(int i=0;i<30;i++)
+  {
+    asteroids.add(new Asteroid());
+
+  }
+ }
 public void draw() 
 {
   background(0);
   bob.show();
   bob.move();
+  bill.show();
+  bill.move();
+  for(int i=0;i<asteroids.size();i++)
+  {
+    asteroids.get(i).move();
+    asteroids.get(i).show();
+     if(dist(bob.getX(),bob.getY(),asteroids.get(i).getX(),asteroids.get(i).getY())<10)
+    {
+      asteroids.remove(i);
+    }
+  }
 }
 public void keyPressed()
 {
@@ -25,8 +52,8 @@ public void keyPressed()
   //press b to decel
   if(key == 98)
   {
-    bob.setDirectionX(1);
-    bob.setDirectionY(1);
+    bob.setDirectionX(0.5);
+    bob.setDirectionY(0.5);
   }
   //rotate press c
   if(key == 99)
@@ -36,10 +63,10 @@ public void keyPressed()
   //hyperspace press d
   if(key == 100)
   {
-    bob.setX((int)(Math.random()*500));
-    bob.setY((int)(Math.random()*500));
+    bob.setX((int)(Math.random()*800));
+    bob.setY((int)(Math.random()*800));
   }
-  //right 1 press e
+  //right  press e
   if(key == 101)
   {
     bob.setX(bob.getX()+5);
@@ -49,7 +76,92 @@ public void keyPressed()
   {
     bob.setY(bob.getY()+5);
   }
+  //press g up 
+  if(key==103)
+  {
+    bob.setY(bob.getY()-5);
+  }
+  //press h left
+  if(key==104)
+  {
+    bob.setX(bob.getX()-5);
+  }
+//press i to shoot
+if(key==105)
+{
+  bill.setX(bob.getX());
+  bill.setDirectionX(10);
+  bill.setDirectionY(10);
 }
+}
+
+class Bullet extends Floater
+{
+  public Bullet()
+  {
+     corners=4;
+      myCenterX=0;
+      myCenterY=0;
+      xCorners = new int[corners];
+      yCorners = new int[corners];
+      xCorners[0]=-1;
+      xCorners[1]=-1;
+      xCorners[2]=2;
+      yCorners[0]=-1;
+      yCorners[1]=1;
+      yCorners[2]=0;
+      myColor=150;
+      myDirectionX=0;
+      myDirectionY=0;
+      myPointDirection=0;
+  }
+   public int getX()
+    {
+      return (int)myCenterX;
+    }
+    public void setX(int x)
+    {
+      myCenterX = x;
+    }
+    public int getY()
+    {
+      return (int)myCenterY;
+    }
+    public void setY(int y)
+    {
+      myCenterY=y;
+    }
+    public double getDirectionX()
+    {
+      return myDirectionX;
+    }
+    public void setDirectionX(double x)
+    {
+      myDirectionX=x;
+    }
+    public double getDirectionY()
+    {
+      return myDirectionY;
+    }
+    public void setDirectionY(double y)
+    {
+      myDirectionY=y;
+    }
+    public double getPointDirection()
+    {
+      return (double)myPointDirection;
+    }
+    public void setPointDirection(int degrees)
+    {
+      myPointDirection=degrees;
+    }
+    public void move()
+    {
+
+    }
+
+}
+
 class SpaceShip extends Floater  
 {   
 
@@ -60,12 +172,12 @@ class SpaceShip extends Floater
       myCenterY=0;
       xCorners = new int[corners];
       yCorners = new int[corners];
-      xCorners[0]=(int)myCenterX-8;
-      xCorners[1]=(int)myCenterX-8;
-      xCorners[2]=(int)myCenterX+16;
-      yCorners[0]=(int)myCenterY-8;
-      yCorners[1]=(int)myCenterY+8;
-      yCorners[2]=(int)myCenterY;
+      xCorners[0]=-8;
+      xCorners[1]=-8;
+      xCorners[2]=16;
+      yCorners[0]=-8;
+      yCorners[1]=+8;
+      yCorners[2]=0;
       myColor=150;
       myDirectionX=0;
       myDirectionY=0;
@@ -110,6 +222,76 @@ class SpaceShip extends Floater
     public void setPointDirection(int degrees)
     {
       myPointDirection=degrees;
+    }
+}
+class Asteroid extends Floater
+{
+  private int myRot;
+  public Asteroid()
+    {
+      corners=4;
+      myCenterX=(int)(Math.random()*800);
+      myCenterY=(int)(Math.random()*800);
+      xCorners = new int[corners];
+      yCorners = new int[corners];
+      xCorners[0]=10;
+      xCorners[1]=-10;
+      xCorners[2]=-10;
+      xCorners[3]=10;
+      yCorners[0]=10;
+      yCorners[1]=10;
+      yCorners[2]=-10;
+      yCorners[3]=-10;
+      myColor=100;
+      myDirectionX=Math.random()*4;
+      myDirectionY=Math.random()*4;
+      myPointDirection=0.5;
+      myRot=1;
+    }   
+     public int getX()
+    {
+      return (int)myCenterX;
+    }
+    public void setX(int x)
+    {
+      myCenterX = x;
+    }
+    public int getY()
+    {
+      return (int)myCenterY;
+    }
+    public void setY(int y)
+    {
+      myCenterY=y;
+    }
+    public double getDirectionX()
+    {
+      return myDirectionX;
+    }
+    public void setDirectionX(double x)
+    {
+      myDirectionX=x;
+    }
+    public double getDirectionY()
+    {
+      return myDirectionY;
+    }
+    public void setDirectionY(double y)
+    {
+      myDirectionY=y;
+    }
+    public double getPointDirection()
+    {
+      return (double)myPointDirection;
+    }
+    public void setPointDirection(int degrees)
+    {
+      myPointDirection=degrees;
+    }
+    public void move()
+    {
+      rotate(myRot);
+      super.move();
     }
 }
 abstract class Floater //Do NOT modify the Floater class! Make changes in the SpaceShip class 
