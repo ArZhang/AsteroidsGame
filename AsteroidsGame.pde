@@ -1,7 +1,8 @@
 SpaceShip bob;
 ArrayList <Asteroid> asteroids;
 Bullet bill;
-
+ArrayList <Bullet> bullets;
+int c = 1;
 public void setup() 
 {
   size(800,800);
@@ -11,9 +12,7 @@ public void setup()
   bob.setPointDirection(0);
   bob.setDirectionX(0.5);
   bob.setDirectionY(0.5);
-  bill=new Bullet();
-  bill.setX(bob.getX());
-  bill.setY(bob.getY());
+  bill=new Bullet(bob);
   bill.setDirectionX(bob.getDirectionX());
   bill.setDirectionY(bob.getDirectionY());
   //a=new Asteroid();
@@ -22,9 +21,11 @@ public void setup()
   for(int i=0;i<30;i++)
   {
     asteroids.add(new Asteroid());
-
   }
- }
+
+  bullets = new ArrayList ();
+  bullets.add(new Bullet(bob));
+}
 public void draw() 
 {
   background(0);
@@ -36,12 +37,44 @@ public void draw()
   {
     asteroids.get(i).move();
     asteroids.get(i).show();
-     if(dist(bob.getX(),bob.getY(),asteroids.get(i).getX(),asteroids.get(i).getY())<10)
+     if(dist(bob.getX(),bob.getY(),asteroids.get(i).getX(),asteroids.get(i).getY())<10||dist(bill.getX(),bill.getY(),asteroids.get(i).getX(),asteroids.get(i).getY())<10)
     {
       asteroids.remove(i);
     }
   }
+
+    if(bill.getX()>width)
+    {     
+      bill.setX(bob.getX());
+      bill.setY(bob.getY());      
+      bill.setDirectionX(bob.getDirectionX());
+      bill.setDirectionY(bob.getDirectionY());
+
+    }    
+    else if (bill.getX()<0)
+    {     
+      bill.setX(bob.getX()); 
+      bill.setY(bob.getY());
+      bill.setDirectionX(bob.getDirectionX());
+      bill.setDirectionY(bob.getDirectionY());
+    }    
+    if(bill.getX() >height)
+    {    
+      bill.setX(bob.getX());  
+      bill.setY(bob.getY());
+      bill.setDirectionX(bob.getDirectionX());
+      bill.setDirectionY(bob.getDirectionY());
+    }   
+    else if (bill.getX() < 0)
+    {     
+      bill.setX(bob.getX()); 
+      bill.setY(bob.getY());
+      bill.setDirectionX(bob.getDirectionX());
+      bill.setDirectionY(bob.getDirectionY());
+    } 
 }
+
+
 public void keyPressed()
 {
   //press a to accel
@@ -89,78 +122,17 @@ public void keyPressed()
 //press i to shoot
 if(key==105)
 {
-  bill.setX(bob.getX());
-  bill.setDirectionX(10);
-  bill.setDirectionY(10);
-}
+
+bill.setDirectionX(5*bob.getDirectionX()+3*Math.cos(bob.getPointDirection()*(Math.PI/180)));
+bill.setDirectionY(5*bob.getDirectionY()+3*Math.sin(bob.getPointDirection()*(Math.PI/180)));
+  //bullets.add(new Bullet(bob));
+  //bill.setDirectionX(5*bob.getDirectionX()+3*Math.cos(bob.getPointDirection()*(Math.PI/180)));
+  //bill.setDirectionY(5*bob.getDirectionY()+3*Math.sin(bob.getPointDirection()*(Math.PI/180)));
 }
 
-class Bullet extends Floater
-{
-  public Bullet()
-  {
-     corners=4;
-      myCenterX=0;
-      myCenterY=0;
-      xCorners = new int[corners];
-      yCorners = new int[corners];
-      xCorners[0]=-1;
-      xCorners[1]=-1;
-      xCorners[2]=2;
-      yCorners[0]=-1;
-      yCorners[1]=1;
-      yCorners[2]=0;
-      myColor=150;
-      myDirectionX=0;
-      myDirectionY=0;
-      myPointDirection=0;
-  }
-   public int getX()
-    {
-      return (int)myCenterX;
-    }
-    public void setX(int x)
-    {
-      myCenterX = x;
-    }
-    public int getY()
-    {
-      return (int)myCenterY;
-    }
-    public void setY(int y)
-    {
-      myCenterY=y;
-    }
-    public double getDirectionX()
-    {
-      return myDirectionX;
-    }
-    public void setDirectionX(double x)
-    {
-      myDirectionX=x;
-    }
-    public double getDirectionY()
-    {
-      return myDirectionY;
-    }
-    public void setDirectionY(double y)
-    {
-      myDirectionY=y;
-    }
-    public double getPointDirection()
-    {
-      return (double)myPointDirection;
-    }
-    public void setPointDirection(int degrees)
-    {
-      myPointDirection=degrees;
-    }
-    public void move()
-    {
-
-    }
-
 }
+
+
 
 class SpaceShip extends Floater  
 {   
