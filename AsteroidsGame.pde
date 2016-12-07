@@ -10,8 +10,6 @@ public void setup()
   bob.setX(250);
   bob.setY(250);
   bob.setPointDirection(0);
-  bob.setDirectionX(0.5);
-  bob.setDirectionY(0.5);
   bill=new Bullet(bob);
   bill.setDirectionX(bob.getDirectionX());
   bill.setDirectionY(bob.getDirectionY());
@@ -22,9 +20,7 @@ public void setup()
   {
     asteroids.add(new Asteroid());
   }
-
   bullets = new ArrayList ();
-  bullets.add(new Bullet(bob));
 }
 public void draw() 
 {
@@ -33,13 +29,29 @@ public void draw()
   bob.move();
   bill.show();
   bill.move();
+
+  for(int n=0;n<bullets.size();n++)
+  {
+  bullets.get(n).move();
+  bullets.get(n).show();
+  }
+
   for(int i=0;i<asteroids.size();i++)
   {
     asteroids.get(i).move();
     asteroids.get(i).show();
-     if(dist(bob.getX(),bob.getY(),asteroids.get(i).getX(),asteroids.get(i).getY())<10||dist(bill.getX(),bill.getY(),asteroids.get(i).getX(),asteroids.get(i).getY())<10)
+    for(int n=0;n<bullets.size();n++)
     {
-      asteroids.remove(i);
+      if(dist(bullets.get(n).getX(),bullets.get(n).getY(),asteroids.get(i).getX(),asteroids.get(i).getY())<20)
+      {
+        asteroids.remove(i);
+
+        asteroids.add(new Asteroid());
+      }
+    }
+    if(dist(bob.getX(),bob.getY(),asteroids.get(i).getX(),asteroids.get(i).getY())<10)
+    {
+      background(255, 0, 0);
     }
   }
 
@@ -58,14 +70,14 @@ public void draw()
       bill.setDirectionX(bob.getDirectionX());
       bill.setDirectionY(bob.getDirectionY());
     }    
-    if(bill.getX() >height)
+    if(bill.getY() >height)
     {    
       bill.setX(bob.getX());  
       bill.setY(bob.getY());
       bill.setDirectionX(bob.getDirectionX());
       bill.setDirectionY(bob.getDirectionY());
     }   
-    else if (bill.getX() < 0)
+    else if (bill.getY() < 0)
     {     
       bill.setX(bob.getX()); 
       bill.setY(bob.getY());
@@ -85,8 +97,8 @@ public void keyPressed()
   //press b to decel
   if(key == 98)
   {
-    bob.setDirectionX(0.5);
-    bob.setDirectionY(0.5);
+    bob.setDirectionX(0);
+    bob.setDirectionY(0);
   }
   //rotate press c
   if(key == 99)
@@ -122,14 +134,15 @@ public void keyPressed()
 //press i to shoot
 if(key==105)
 {
-
-bill.setDirectionX(5*bob.getDirectionX()+3*Math.cos(bob.getPointDirection()*(Math.PI/180)));
-bill.setDirectionY(5*bob.getDirectionY()+3*Math.sin(bob.getPointDirection()*(Math.PI/180)));
-  //bullets.add(new Bullet(bob));
-  //bill.setDirectionX(5*bob.getDirectionX()+3*Math.cos(bob.getPointDirection()*(Math.PI/180)));
-  //bill.setDirectionY(5*bob.getDirectionY()+3*Math.sin(bob.getPointDirection()*(Math.PI/180)));
+//bill.setDirectionX(5*bob.getDirectionX()+3*Math.cos(bob.getPointDirection()*(Math.PI/180)));
+//bill.setDirectionY(5*bob.getDirectionY()+3*Math.sin(bob.getPointDirection()*(Math.PI/180)));
+bullets.add(new Bullet(bob));
 }
-
+if(key!=105)
+{
+  bill.setX(bob.getX());
+  bill.setY(bob.getY());
+}
 }
 
 

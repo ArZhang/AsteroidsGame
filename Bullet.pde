@@ -8,8 +8,8 @@ class Bullet extends Floater
       xCorners = new int[corners];
       yCorners = new int[corners];
       myColor=150;
-      myDirectionX=5*bob.getDirectionX()+3*Math.cos(bob.getPointDirection()*(Math.PI/180));
-      myDirectionY=5*bob.getDirectionX()+3*Math.cos(bob.getPointDirection()*(Math.PI/180));
+      myDirectionX=6*Math.cos(bob.getPointDirection()*(Math.PI/180));
+      myDirectionY=6*Math.sin(bob.getPointDirection()*(Math.PI/180));
       myPointDirection=bob.getPointDirection();
   }
    public int getX()
@@ -66,6 +66,7 @@ class Bullet extends Floater
     //convert degrees to radians for sin and cos         
     double dRadians = myPointDirection*(Math.PI/180);                 
     int xRotatedTranslated, yRotatedTranslated;    
+    fill(0,255,0);
     ellipse((float)myCenterX,(float)myCenterY,10,10);
   }
 }
