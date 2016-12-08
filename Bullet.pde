@@ -8,8 +8,8 @@ class Bullet extends Floater
       xCorners = new int[corners];
       yCorners = new int[corners];
       myColor=150;
-      myDirectionX=6*Math.cos(bob.getPointDirection()*(Math.PI/180));
-      myDirectionY=6*Math.sin(bob.getPointDirection()*(Math.PI/180));
+      myDirectionX=10*Math.cos(bob.getPointDirection()*(Math.PI/180));
+      myDirectionY=10*Math.sin(bob.getPointDirection()*(Math.PI/180));
       myPointDirection=bob.getPointDirection();
   }
    public int getX()

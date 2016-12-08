@@ -1,6 +1,6 @@
 SpaceShip bob;
 ArrayList <Asteroid> asteroids;
-Bullet bill;
+//Bullet bill;
 ArrayList <Bullet> bullets;
 int c = 1;
 public void setup() 
@@ -10,9 +10,9 @@ public void setup()
   bob.setX(250);
   bob.setY(250);
   bob.setPointDirection(0);
-  bill=new Bullet(bob);
-  bill.setDirectionX(bob.getDirectionX());
-  bill.setDirectionY(bob.getDirectionY());
+ // bill=new Bullet(bob);
+  //bill.setDirectionX(bob.getDirectionX());
+  //bill.setDirectionY(bob.getDirectionY());
   //a=new Asteroid();
 
   asteroids = new ArrayList ();
@@ -27,8 +27,8 @@ public void draw()
   background(0);
   bob.show();
   bob.move();
-  bill.show();
-  bill.move();
+ // bill.show();
+  //bill.move();
 
   for(int n=0;n<bullets.size();n++)
   {
@@ -55,7 +55,7 @@ public void draw()
     }
   }
 
-    if(bill.getX()>width)
+  /*  if(bill.getX()>width)
     {     
       bill.setX(bob.getX());
       bill.setY(bob.getY());      
@@ -83,7 +83,7 @@ public void draw()
       bill.setY(bob.getY());
       bill.setDirectionX(bob.getDirectionX());
       bill.setDirectionY(bob.getDirectionY());
-    } 
+    } */
 }
 
 
@@ -138,11 +138,11 @@ if(key==105)
 //bill.setDirectionY(5*bob.getDirectionY()+3*Math.sin(bob.getPointDirection()*(Math.PI/180)));
 bullets.add(new Bullet(bob));
 }
-if(key!=105)
+/*if(key!=105)
 {
   bill.setX(bob.getX());
   bill.setY(bob.getY());
-}
+}*/
 }
 
 
