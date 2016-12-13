@@ -5,7 +5,7 @@ ArrayList <Bullet> bullets;
 int c = 1;
 public void setup() 
 {
-  size(800,800);
+  size(500,500);
   bob=new SpaceShip();
   bob.setX(250);
   bob.setY(250);
